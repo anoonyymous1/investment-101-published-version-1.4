@@ -6,84 +6,57 @@
 //
 
 import SwiftUI
+import XCAStocksAPI
 
 struct MainMenuView: View {
-    @State private var selectedTab = 1
+    @State private var selectedTab: Int = 0
+    @StateObject var appVM = AppViewModel()
     
+    @State private var showCourseWalkthrough = !UserDefaults.standard.bool(forKey: "hasViewedCourseWalkthrough")
+    @State private var showStockWalkthrough = !UserDefaults.standard.bool(forKey: "hasViewedStockWalkthrough")
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                Spacer()
-                
-                switch selectedTab {
-                case 0:
-                    ProfileView()
-                        .navigationTitle("Profile")
-                case 1:
-                    UnitsView()
-                        .navigationTitle("Courses")
-                default:
-                    EmptyView()
-                }
-                
-                Spacer()
-                
-                HStack {
-                    TabBarButton(imageName: "person.fill", text: "Profile", isSelected: selectedTab == 0) {
-                        selectedTab = 0
-                    }
-                    .padding(.horizontal, 60)
-                    
-                    Spacer()
-                    
-                    TabBarButton(imageName: "book.fill", text: "Courses", isSelected: selectedTab == 1) {
-                        selectedTab = 1
-                    }
-                    .padding(.horizontal, 60)
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 10)
-                .background(Color.white.shadow(radius: 2))
+        
+        TabView(selection: $selectedTab) {
+            //courses
+            NavigationStack{
+                UnitsView()
             }
-            .edgesIgnoringSafeArea(.bottom)
-            
-            
-        }
-        .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(true)
-    }
-}
-
-
-struct TabBarButton: View {
-    let imageName: String
-    let text: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 4) {
-                Image(systemName: imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
-                
-                Text(text)
-                    .font(.caption)
-                    .foregroundColor(isSelected ? .blue : .gray)
+            .tabItem {
+                Image(systemName: "book.fill")
+                Text("Learn")
             }
-            .padding(.vertical, 6)
+            .sheet(isPresented: $showCourseWalkthrough) {
+                CourseTutorialView()
+            }
+            
+            .tag(0)
+            //stockview
+            NavigationStack{
+                redirectview()
+                    .onAppear()
+            }
+            .environmentObject(appVM)
+            .tabItem {
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                Text("Stocks")
+            }
+            .sheet(isPresented: $showStockWalkthrough) {
+                StockTutorialView()
+            }
+            
+            .tag(1)
+            
+            NavigationStack{
+                //profile view
+                ProfileView()
+            }
+            .tabItem {
+                Image(systemName: "person.fill")
+                Text("Profile")
+            }
+            
+            .tag(2)
         }
-        .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-    }
-}
-
-
-
-struct MainMenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainMenuView()
     }
 }

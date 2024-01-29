@@ -54,7 +54,10 @@ struct UnitsView: View {
             Topic(id: 3, name: K.topic21, articleURL: K.article21URL, questions: K.quiz21, imgID: "img3"),
             Topic(id: 4, name: K.topic22, articleURL: K.article22URL, questions: K.quiz22, imgID: "img4"),
             Topic(id: 5, name: K.topic23, articleURL: K.article23URL, questions: K.quiz23, imgID: "img5"),
-            Topic(id: 6, name: K.topic24, articleURL: K.article24URL, questions: K.quiz24, imgID: "img6")
+            Topic(id: 6, name: K.topic24, articleURL: K.article24URL, questions: K.quiz24, imgID: "img6"),
+            Topic(id: 7, name: K.topic25, articleURL: K.article25URL, questions: K.quiz25, imgID: "img7"),
+            Topic(id: 8, name: K.topic26, articleURL: K.article26URL, questions: K.quiz26, imgID: "img8")
+
         ]
             // Add more units here
     ]
