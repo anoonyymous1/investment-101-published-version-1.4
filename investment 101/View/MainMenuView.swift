@@ -10,7 +10,7 @@ import XCAStocksAPI
 
 struct MainMenuView: View {
     @State private var selectedTab: Int = 0
-    @StateObject var appVM = AppViewModel()
+
     
     @State private var showCourseWalkthrough = !UserDefaults.standard.bool(forKey: "hasViewedCourseWalkthrough")
     @State private var showStockWalkthrough = !UserDefaults.standard.bool(forKey: "hasViewedStockWalkthrough")
@@ -29,22 +29,22 @@ struct MainMenuView: View {
                 CourseTutorialView()
             }
             
-            .tag(0)
-            //stockview
-            NavigationStack{
-                redirectview()
-                    .onAppear()
-            }
-            .environmentObject(appVM)
-            .tabItem {
-                Image(systemName: "chart.line.uptrend.xyaxis")
-                Text("Stocks")
-            }
-            .sheet(isPresented: $showStockWalkthrough) {
-                StockTutorialView()
-            }
-            
-            .tag(1)
+//            .tag(0)
+//            //stockview
+//            NavigationStack{
+//                redirectview()
+//                    .onAppear()
+//            }
+//            .environmentObject(appVM)
+//            .tabItem {
+//                Image(systemName: "chart.line.uptrend.xyaxis")
+//                Text("Stocks")
+//            }
+//            .sheet(isPresented: $showStockWalkthrough) {
+//                StockTutorialView()
+//            }
+//            
+//            .tag(1)
             
             NavigationStack{
                 //profile view
@@ -55,7 +55,7 @@ struct MainMenuView: View {
                 Text("Profile")
             }
             
-            .tag(2)
+            .tag(1)
         }
         .navigationBarBackButtonHidden(true)
     }

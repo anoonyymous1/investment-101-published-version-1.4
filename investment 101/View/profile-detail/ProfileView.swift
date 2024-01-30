@@ -83,7 +83,9 @@ struct ProfileView: View {
             .cornerRadius(12)
             .shadow(radius: 2)
         
-        }.edgesIgnoringSafeArea(.top)
+        }
+        .edgesIgnoringSafeArea(.top)
+        .padding(.top, -150)
     }
         
 }
